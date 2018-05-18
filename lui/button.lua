@@ -53,7 +53,6 @@ function button.newButton(btnX, btnY, text, texture, colour)
 			left, center, right = texture.ml, texture.mc, texture.mr
 		end
 
-
 		love.graphics.draw(texture.image, left, 0, y*8, 0, texture.xScale/2, texture.yScale/2)
 		for x = 1, width do
 			love.graphics.draw(texture.image, center, 8*x, 8*y, 0, texture.xScale/2, texture.yScale/2)
@@ -76,20 +75,36 @@ function button.newButton(btnX, btnY, text, texture, colour)
 end
 
 function button.updateAreDowns(delta)
-	for btn in ipairs(buttons) do
+	local mouseX, mouseY = love.mouse.getPosition()
+	local mouseD = love.mouse.isDown(1)
 
+	for id, btn in ipairs(buttons) do
+		if mouseD and mouseX >= btn.x and mouseX <= btn.x + btn.width and mouseY >= btn.y and mouseY <= btn.y+btn.height then
+			btn.pressed = true
+		else
+			btn.pressed = false
+		end
 	end
 end
 
-function button.drawButtons(scale)
+function button.drawButtons()
+	love.graphics.setBlendMode("alpha", "premultiplied")
 	for id, btn in ipairs(buttons) do
+		if btn.pressed then
+			love.graphics.setColor(0.5, 0.5, 0.5)
+		else
+			love.graphics.setColor(1, 1, 1)
+		end
 
-		love.graphics.setCanvas()
-		love.graphics.setColor(1, 1, 1, 1)
-		love.graphics.setBlendMode("alpha", "premultiplied")
 		love.graphics.draw(btn.canvas, btn.x, btn.y)
-
 	end
+	love.graphics.setBlendMode("alpha")
+end
+
+function button.isDown(id)
+
+	return buttons[id]["pressed"]
+
 end
 
 return button
