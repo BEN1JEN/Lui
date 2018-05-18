@@ -18,18 +18,19 @@ function love.load()
 
 	Prid = lui.progress.newBar(50, 600, 1000, 50)
 
-	Rbid = lui.radio.newButtonSet(800, 100, {"Hello", "Goodbye", "Other", "foo", "bar", "baz"})
+	Rbid = lui.radio.newButtonSet(800, 300, {"Hello", "Goodbye", "Other", "foo", "bar", "baz"})
+
+	Clid = lui.colour.newPicker(800, 10)
 end
 
 function love.draw()
 	lui.draw()
 	love.graphics.setColor(1, 1, 1)
 	if lui.checkbox.isTicked(Shid) then
+		love.graphics.setColor(lui.colour.getColour(Clid))
 		love.graphics.print(text, lui.slider.getPosition(Tyid)*100, 10)
 	end
 end
-
-
 
 function love.update(delta)
 	lui.update()
