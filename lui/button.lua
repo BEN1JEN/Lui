@@ -11,8 +11,8 @@ function button.newButtonTexture(imageFile, font)
 	texture.xRes = texture.xRes / 3
 	texture.yRes = texture.yRes / 3
 
-	texture.xScale = math.floor(16/texture.xRes+0.5)
-	texture.yScale = math.floor(16/texture.yRes+0.5)
+	texture.xScale = math.floor(16/texture.xRes)
+	texture.yScale = math.floor(16/texture.yRes)
 
 	texture.tl = love.graphics.newQuad(0, 0, texture.xRes, texture.yRes, texture.image:getDimensions())
 	texture.tc = love.graphics.newQuad(texture.xRes, 0, texture.xRes, texture.yRes, texture.image:getDimensions())
@@ -30,38 +30,41 @@ function button.newButtonTexture(imageFile, font)
 
 end
 
-function button.newButton(x, y, text, texture, colour)
+function button.newButton(btnX, btnY, text, texture, colour)
 
 	local id = #buttons + 1
-	local btn = {x=x, y=y, width=math.ceil(texture.font:getWidth(text)/8)*8, height=math.ceil(texture.font:getHeight(text)/8)*8, pressed=false}
+	local btn = {x=btnX, y=btnY, width=math.ceil(texture.font:getWidth(text)/8+1)*8, height=math.ceil(texture.font:getHeight(text)/8+1)*8, pressed=false}
+
+	local height, width = math.ceil(texture.font:getHeight(text)/8)+1, math.ceil(texture.font:getWidth(text)/8)
 
 	local canvas = love.graphics.newCanvas(btn.width, btn.height)
 	love.graphics.setCanvas(canvas)
 
 	love.graphics.setColor(1, 1, 1, 1)
 
-	for y = 0, math.ceil(texture.font:getHeight(text)/8) do
+	for y = 0, height do
 
 		local left, center, right
 		if y == 0 then
 			left, center, right = texture.tl, texture.tc, texture.tr
-		elseif y == math.ceil(texture.font:getHeight(text)/8) then
+		elseif y == height-1 then
 			left, center, right = texture.bl, texture.bc, texture.br
 		else
 			left, center, right = texture.ml, texture.mc, texture.mr
 		end
 
-		love.graphics.draw(texture.image, left, x, y+y*8, 0, texture.xScale/2, texture.yScale/2)
-		for x = 1, math.ceil(texture.font:getWidth(text)/8) do
-			love.graphics.draw(texture.image, center, x+8*x, y+y*8, 0, texture.xScale/2, texture.yScale/2)
+
+		love.graphics.draw(texture.image, left, 0, y*8, 0, texture.xScale/2, texture.yScale/2)
+		for x = 1, width do
+			love.graphics.draw(texture.image, center, 8*x, 8*y, 0, texture.xScale/2, texture.yScale/2)
 		end
-		love.graphics.draw(texture.image, right, x+8*math.ceil(texture.font:getWidth(text)/8+1), y+y*8, 0, texture.xScale/2, texture.yScale/2)
+		love.graphics.draw(texture.image, right, width*8, y*8, 0, texture.xScale/2, texture.yScale/2)
 
 	end
 
 	love.graphics.setColor(colour)
 	love.graphics.setFont(texture.font)
-	love.graphics.print(text, x+8, y+4)
+	love.graphics.print(text, 8, 4)
 
 	love.graphics.setCanvas()
 	btn["canvas"] = canvas
