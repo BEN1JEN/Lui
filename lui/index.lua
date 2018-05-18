@@ -2,14 +2,22 @@ local lui = {}
 
 local button = require "lui.button"
 local slider = require "lui.slider"
+local checkbox = require "lui.checkbox"
+local progress = require "lui.progress"
+local radio = require "lui.radioButtons"
 
 lui.button = button
 lui.slider = slider
+lui.checkbox = checkbox
+lui.progress = progress
+lui.radio = radio
 
 function lui.update(delta)
 
 	lui.button.updateAreDowns(delta)
 	lui.slider.updatePositions(delta)
+	lui.checkbox.updateHaveBeenChecked(delta)
+	lui.radio.updateRadioSelectors(delta)
 
 end
 
@@ -17,6 +25,9 @@ function lui.draw()
 
 	lui.button.drawButtons()
 	lui.slider.drawSliders()
+	lui.checkbox.drawBoxes()
+	lui.progress.drawPBars()
+	lui.radio.drawButnSets()
 
 end
 

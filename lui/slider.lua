@@ -61,4 +61,10 @@ function slider.drawSliders()
 
 end
 
+function slider.getPosition(id)
+
+	return sliders[id]["pos"]
+
+end
+
 return slider
