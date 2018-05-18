@@ -10,6 +10,8 @@ function love.load()
 	Byid = lui.button.newButton(100, 250, "Goodbye", default, {0, 0, 1})
 	lui.button.newButton(500, 200, "This is a heidi button", heidi, {0, 0, 0})
 
+	lui.slider.newSlider(500, 10, 150)
+
 end
 
 function love.draw()
