@@ -6,6 +6,7 @@ local checkbox = require "lui.checkbox"
 local progress = require "lui.progress"
 local radio = require "lui.radio"
 local colour = require "lui.colour"
+local mouse = require "lui.mouse"
 
 lui.button = button
 lui.slider = slider
@@ -13,9 +14,11 @@ lui.checkbox = checkbox
 lui.progress = progress
 lui.radio = radio
 lui.colour = colour
+lui.mouse = mouse
 
 function lui.update(delta)
 
+	lui.mouse.updatePositionAndDown(delta)
 	lui.button.updateAreDowns(delta)
 	lui.slider.updatePositions(delta)
 	lui.checkbox.updateHaveBeenChecked(delta)

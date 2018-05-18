@@ -1,6 +1,5 @@
 local checkbox = {}
 local checkboxes = {}
-local mouseDLast = false
 
 function checkbox.newBox(x, y, text, colour)
 
@@ -15,16 +14,15 @@ end
 
 function checkbox.updateHaveBeenChecked(delta)
 
-	local mouseX, mouseY = love.mouse.getPosition()
-	local mouseD = love.mouse.isDown(1)
+	local mouseX, mouseY, _, mouseND = lui.mouse.get()
 
-	for id, box in ipairs(checkboxes) do
-		if mouseD and not mouseDLast and mouseX >= box.x and mouseX <= box.x+16 and mouseY >= box.y and mouseY <= box.y+16 then
-			box.ticked = not box.ticked
+	if mouseND then
+		for id, box in ipairs(checkboxes) do
+			if mouseX >= box.x and mouseX <= box.x+16 and mouseY >= box.y and mouseY <= box.y+16 then
+				box.ticked = not box.ticked
+			end
 		end
 	end
-
-	mouseDLast = mouseD
 
 end
 

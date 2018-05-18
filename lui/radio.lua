@@ -10,8 +10,7 @@ end
 
 function radio.updateRadioSelectors(delta)
 
-	local mouseX, mouseY = love.mouse.getPosition()
-	local mouseD = love.mouse.isDown(1)
+	local mouseX, mouseY, mouseD = lui.mouse.get()
 
 	if mouseD then
 		for id, set in ipairs(buttonSets) do

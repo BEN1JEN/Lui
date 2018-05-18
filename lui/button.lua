@@ -75,8 +75,7 @@ function button.newButton(btnX, btnY, text, texture, colour)
 end
 
 function button.updateAreDowns(delta)
-	local mouseX, mouseY = love.mouse.getPosition()
-	local mouseD = love.mouse.isDown(1)
+	local mouseX, mouseY, mouseD = lui.mouse.get()
 
 	for id, btn in ipairs(buttons) do
 		if mouseD and mouseX >= btn.x and mouseX <= btn.x + btn.width and mouseY >= btn.y and mouseY <= btn.y+btn.height then
@@ -85,6 +84,7 @@ function button.updateAreDowns(delta)
 			btn.pressed = false
 		end
 	end
+
 end
 
 function button.drawButtons()

@@ -1,6 +1,5 @@
 local slider = {}
 local sliders = {}
-local mouseDLast = false
 
 function slider.newSlider(x, y, length, colour, upright, min, max)
 
@@ -21,12 +20,11 @@ end
 
 function slider.updatePositions(delta)
 
-	local mouseX, mouseY = love.mouse.getPosition()
-	local mouseD = love.mouse.isDown(1)
+	local mouseX, mouseY, mouseD, mouseND = lui.mouse.get()
 	for id, sld in ipairs(sliders) do
 		local position = (sld.pos/(sld.max-sld.min)*(sld.length-14))+2
 		if not sld.grabbed then
-			if mouseD and not mouseDLast and mouseX > sld.x+position and mouseX < sld.x+position+10 and mouseY > sld.y+2 and mouseY < sld.y+27 then
+			if mouseND and mouseX > sld.x+position and mouseX < sld.x+position+10 and mouseY > sld.y+2 and mouseY < sld.y+27 then
 				sld.grabbed = true
 			end
 		else
@@ -43,7 +41,6 @@ function slider.updatePositions(delta)
 			end
 		end
 	end
-	mouseDLast = mouseD
 
 end
 

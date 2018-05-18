@@ -33,8 +33,7 @@ end
 colour.updateMode = {}
 
 function colour.updateMode.RGB(x, y, colour)
-	local mouseX, mouseY = love.mouse.getPosition()
-	local mouseD = love.mouse.isDown(1)
+	local mouseX, mouseY, mouseD = lui.mouse.get()
 
 	if mouseD and mouseY > y+10 and mouseY < y+110 then
 		if mouseX > x+10 and mouseX < x+20 then
