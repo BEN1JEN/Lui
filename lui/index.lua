@@ -1,41 +1,50 @@
-local lui = {}
+function create()
 
-local button = require "lui.button"
-local slider = require "lui.slider"
-local checkbox = require "lui.checkbox"
-local progress = require "lui.progress"
-local radio = require "lui.radio"
-local colour = require "lui.colour"
-local mouse = require "lui.mouse"
+	local lui = {}
 
-lui.button = button
-lui.slider = slider
-lui.checkbox = checkbox
-lui.progress = progress
-lui.radio = radio
-lui.colour = colour
-lui.mouse = mouse
+	local button = require "lui.button"
+	local slider = require "lui.slider"
+	local checkbox = require "lui.checkbox"
+	local progress = require "lui.progress"
+	local radio = require "lui.radio"
+	local colour = require "lui.colour"
+	local mouse = require "lui.mouse"
 
-function lui.update(delta)
+	local screenWidth, screenHeight = love.graphics.getDimensions()
 
-	lui.mouse.updatePositionAndDown(delta)
-	lui.button.updateAreDowns(delta)
-	lui.slider.updatePositions(delta)
-	lui.checkbox.updateHaveBeenChecked(delta)
-	lui.radio.updateRadioSelectors(delta)
-	lui.colour.updateColoursPicked(delta)
+	lui.mouse = mouse(0, 0, screenWidth, screenHeight)
+	lui.button = button(lui.mouse)
+	lui.slider = slider(lui.mouse)
+	lui.checkbox = checkbox(lui.mouse)
+	lui.progress = progress()
+	lui.radio = radio(lui.mouse)
+	lui.colour = colour(lui.mouse)
 
+	function lui.update(canvas)
+
+		love.graphics.setCanvas(canvas)
+			lui.mouse.updatePositionAndDown()
+			lui.button.updateAreDowns()
+			lui.slider.updatePositions()
+			lui.checkbox.updateHaveBeenChecked()
+			lui.radio.updateRadioSelectors()
+			lui.colour.updateColoursPicked()
+		love.graphics.setCanvas()
+
+	end
+
+	function lui.draw()
+
+		lui.button.drawButtons()
+		lui.slider.drawSliders()
+		lui.checkbox.drawBoxes()
+		lui.progress.drawPBars()
+		lui.radio.drawButnSets()
+		lui.colour.drawColours()
+
+	end
+
+	return lui
 end
 
-function lui.draw()
-
-	lui.button.drawButtons()
-	lui.slider.drawSliders()
-	lui.checkbox.drawBoxes()
-	lui.progress.drawPBars()
-	lui.radio.drawButnSets()
-	lui.colour.drawColours()
-
-end
-
-return lui
+return create
