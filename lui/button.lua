@@ -109,6 +109,10 @@ function create(mouse)
 
 	end
 
+	function button.delete(id)
+		buttons[id] = nil
+	end
+
 	return button
 
 end
